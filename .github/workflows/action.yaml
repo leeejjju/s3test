@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy: # job 이름
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #os 설정 
 
     steps:
       - name: 코드 체크아웃
@@ -27,4 +27,4 @@ jobs:
           aws-region: ${{secrets.AWS_REGION}}
 
       - name: S3에 업로드 
-        run: aws s3 sync ./build s3://${{secrets.AWS_BUCKET}} --acl public-read 
+        run: aws s3 sync ./build s3://leeejjjubucket --acl public-read 

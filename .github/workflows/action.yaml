@@ -1,0 +1,30 @@
+name: CICD FRONT to AWS S3 
+
+# trigger 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy: # job 이름
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v3 # 업로드된 코드를 가져옴 
+      
+      - name: 리액트 빌드 
+        run: 
+          npm install
+          npm run build 
+
+      - name: AWS IAM 사용자 설정 
+        uses: aws-actions/configure-aws-credentials@v2
+        with: 
+          aws-access-key-id: ${{secret.AWS_ACCESS_KEY_ID}} 
+          aws-secret-access-key: $${{secret.AWS_SECRET_KEY}} 
+          aws-region: ${{AWS_REGION}}
+
+      - name: S3에 업로드 
+        run: aws s3 sync ./build s3://${{secret.AWS_BUCKET}} --acl public-read 

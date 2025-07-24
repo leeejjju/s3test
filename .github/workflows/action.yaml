@@ -24,7 +24,7 @@ jobs:
         with: 
           aws-access-key-id: ${{secret.AWS_ACCESS_KEY_ID}} 
           aws-secret-access-key: $${{secret.AWS_SECRET_KEY}} 
-          aws-region: ${{AWS_REGION}}
+          aws-region: ${{secret.AWS_REGION}}
 
       - name: S3에 업로드 
         run: aws s3 sync ./build s3://${{secret.AWS_BUCKET}} --acl public-read 
